@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pluma Digital</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+    <script src="main.js" defer></script>
+</head>
+<body>
+
+    <!-- Modal de advertencia para navegadores no compatibles -->
+    <div id="browser-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h2>⚠️ Navegador no compatible</h2>
+            <p>Esta aplicación utiliza tecnologías avanzadas de IA que solo están disponibles en <strong>Google Chrome</strong>.</p>
+            <p>Por favor, abre esta aplicación en Chrome para disfrutar de todas las funcionalidades.</p>
+            
+            <div class="modal-buttons">
+                <button id="close-modal" class="modal-btn secondary">Continuar de todos modos</button>
+            </div>
+            
+            <!-- Información sobre cómo cerrar la pestaña manualmente -->
+            <div class="shortcuts-info">
+                <p>Puedes cerrar esta pestaña manualmente usando:</p>
+                <div class="shortcuts">
+                    <strong>Ctrl + W</strong> - Cerrar pestaña<br>
+                    <strong>Alt + F4</strong> - Cerrar navegador
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenedor principal de la aplicación -->
+    <section class="container">
+        <h1>✒️ Pluma Digital</h1>
+        <h3>Tu asistente inteligente de escritura potenciado por IA</h3>
+
+        <label for="idea">💡 ¿Qué quieres que la IA te escriba?</label>
+        <textarea id="idea" placeholder="Ejemplo: Redactar un email para aplicar a una oferta de trabajo como desarrollador frontend con html, css y javascript"></textarea>
+
+        <!-- Fila con dos columnas para configuración del texto -->
+        <div class="form-row">
+            <div class="form-column">
+                <label for="tone">🎭 Tono del texto</label>
+                <select id="tone">
+                    <option value="neutral">Neutral</option>
+                    <option value="formal">Formal</option>
+                    <option value="casual">Casual</option>
+                </select>
+            </div>
+            
+            <div class="form-column">
+                <label for="length">📏 Longitud del texto</label>
+                <select id="length">
+                    <option value="short">Corto</option>
+                    <option value="medium">Medio</option>
+                    <option value="long">Largo</option>
+                </select>
+            </div>
+        </div>
+
+        <button id="generate-btn">✏️ Generar texto</button>
+        
+        <!-- Área de salida del texto generado -->
+        <div class="output-section">
+            <div class="output-header">
+                <button id="copy-btn" title="Copiar texto">📋</button>
+            </div>
+            <div id="output">
+                Aquí se mostrará el texto generado con IA ...
+            </div>
+        </div>
+    </section>
+    
+</body>
+</html>

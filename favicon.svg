@@ -1,0 +1,13 @@
+<svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Sombra sutil para darle profundidad -->
+  <path d="M16.1421 3.85785L5.85786 14.1421C5.40424 14.5958 5.40424 15.3212 5.85786 15.7749L8.22513 18.1421C8.67875 18.5958 9.40416 18.5958 9.85778 18.1421L20.1421 7.85785C21.3137 6.68628 21.3137 4.77091 20.1421 3.60000C19.2291 2.68628 17.0558 2.9442 16.1421 3.85785Z" fill="#064953" opacity="0.2"/>
+  
+  <!-- Cuerpo principal de la pluma en color oscuro -->
+  <path d="M15 2.5L4.71573 12.7843C4.26211 13.2379 4.26211 13.9633 4.71573 14.417L7.08299 16.7843C7.53661 17.2379 8.26202 17.2379 8.71564 16.7843L19 6.5C20.1716 5.32842 20.1716 3.41304 19 2.24264C18.087 1.32892 15.9137 1.5868 15 2.5Z" fill="#001218"/>
+  
+  <!-- Detalle brillante en la pluma -->
+  <path d="M16.5 4L17.5 5" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
+  
+  <!-- Chispa/Destello digital en la punta (color primario) -->
+  <path d="M4 14.5L2.5 16L4 17.5L5.5 16L4 14.5Z" fill="#047ba6"/>
+</svg>

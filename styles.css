@@ -1,0 +1,363 @@
+/* ===================================================================
+   VARIABLES CSS - SISTEMA DE COLORES UNIFICADO
+   =================================================================== */
+:root {
+  /* Paleta de colores principal */
+  --bgcolor: #f2f8f9;            /* Color de fondo general */
+  --bg-container: #fff;          /* Fondo de contenedores */
+  --primary: #047ba6;            /* Color primario (botones, enlaces) */
+  --primary-hover: #064953;      /* Color primario en hover */
+  --text-color: #001218;         /* Color de texto principal */
+  
+  /* Colores específicos */
+  --border-color: #ccc;          /* Bordes normales */
+  --border-focus: #ddd;          /* Bordes enfocados/activos */
+  --output-bg: #f9fafb;          /* Fondo del área de salida */
+  --output-header-bg: #f0f0f0;   /* Fondo del header del output */
+  --modal-overlay: rgba(0, 0, 0, 0.7);  /* Overlay semitransparente del modal */
+  --modal-shadow: rgba(0, 0, 0, 0.3);   /* Sombra del modal */
+  --error-color: #e74c3c;        /* Color para errores y advertencias */
+  --secondary-color: #6c757d;    /* Color secundario (botones menos importantes) */
+  --secondary-hover: #5a6268;    /* Color secundario en hover */
+  --box-shadow: rgba(0, 0, 0, 0.1);      /* Sombra suave para contenedores */
+}
+
+/* ===================================================================
+   CONFIGURACIÓN BÁSICA Y RESET
+   =================================================================== */
+
+/* Tamaño base de fuente - 1rem = 10px para cálculos fáciles */
+html{
+    font-size: 10px;
+}
+
+/* Box-sizing universal para control total del layout */
+* {
+  box-sizing: border-box;     
+}
+
+/* ===================================================================
+   LAYOUT PRINCIPAL
+   =================================================================== */
+
+/* Layout principal con flexbox centrado */
+body {
+  margin: 0;
+  padding: 3rem;
+  font-family: "Segoe UI", Roboto,  sans-serif, Arial, Helvetica;
+  background-color: var(--bgcolor); 
+  color: var(--text-color);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;  /* Alineación superior para evitar centrado vertical */
+  min-height: 100vh;         
+}
+
+/* Contenedor principal de la aplicación */
+.container {
+  font-size: 1.6rem;  
+  width: 100%;
+  max-width: 750px;          /* Límite de ancho para legibilidad */
+  background-color: var(--bg-container); 
+  border-radius: 5px;         
+  padding: 2rem;                    
+  box-shadow: 0 5px 10px var(--box-shadow); 
+}
+
+/* ===================================================================
+   TIPOGRAFÍA Y ENCABEZADOS
+   =================================================================== */
+
+/* Título principal de la aplicación */
+h1 {
+  font-size: 3rem;  
+  margin-bottom: 2.5rem; 
+  text-align: center;
+  color: var(--primary-hover); 
+}
+
+/* Subtítulo descriptivo */
+h3 {
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: var(--primary);
+}
+
+/* ===================================================================
+   FORMULARIOS Y CONTROLES
+   =================================================================== */
+
+/* Etiquetas de los campos del formulario */
+label{
+	font-weight: 600;
+	margin-top: 1.6rem;
+	display: block;
+	color: var(--text-color);
+}
+
+/* Estilos base para todos los elementos de formulario */
+textarea, select, button{
+    width: 100%;
+    font-size: 1.6rem;
+    margin-top: 1rem;
+    padding: 1.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    transition: all 300ms ease-in-out;  /* Transición suave para interacciones */
+    font-family: inherit;  /* Hereda la fuente del contenedor padre */
+}
+
+/* ===================================================================
+   LAYOUT RESPONSIVO - FORMULARIO EN DOS COLUMNAS
+   =================================================================== */
+
+/* Contenedor flex para los selectores en línea (pantallas grandes) */
+.form-row {
+    display: flex;
+    gap: 2rem;  /* Espacio entre columnas */
+    margin-top: 1.6rem;
+}
+
+/* Cada columna ocupa el mismo espacio disponible */
+.form-column {
+    flex: 1;
+}
+
+/* Las etiquetas dentro de columnas no necesitan margen superior */
+.form-column label {
+    margin-top: 0;
+}
+
+/* Responsive: En pantallas pequeñas cambiar a diseño vertical */
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+        gap: 0;  /* Sin gap en vertical para mantener espaciado consistente */
+    }
+    
+    /* Restaurar margen superior para etiquetas en mobile */
+    .form-column label {
+        margin-top: 1.6rem;
+    }
+}
+
+/* ===================================================================
+   ESTILOS ESPECÍFICOS PARA ELEMENTOS DE FORMULARIO
+   =================================================================== */
+
+/* Textarea con capacidad de redimensión vertical */
+textarea {
+    resize: vertical;  /* Solo permite redimensionar verticalmente */
+    min-height: 10rem;  /* Altura mínima para comodidad del usuario */
+}
+
+/* Estados de enfoque para elementos interactivos */
+select:focus, textarea:focus {
+    border-color: var(--primary);
+    outline: none;  /* Remueve el outline por defecto del navegador */
+    box-shadow: 0 0 0 2px var(--primary-hover);  /* Sombra personalizada para accesibilidad */
+}
+
+/* ===================================================================
+   BOTONES
+   =================================================================== */
+
+/* Estilos base para todos los botones */
+button {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    margin-top: 2rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 300ms ease-in-out;
+}
+
+/* Estado hover para botones */
+button:hover {
+    background-color: var(--primary-hover);
+}
+
+/* ===================================================================
+   ÁREA DE SALIDA DEL TEXTO GENERADO
+   =================================================================== */
+
+/* Contenedor principal del área de output */
+.output-section {
+    margin-top: 2rem;
+}
+
+/* Header del área de salida (contiene el botón de copiar) */
+.output-header {
+    display: flex;
+    justify-content: flex-end;  /* Botón alineado a la derecha */
+    background-color: var(--output-header-bg);
+    border: 1px solid var(--border-focus);
+    border-radius: 5px 5px 0 0;  /* Solo esquinas superiores redondeadas */
+    padding: 0.8rem 1rem;
+}
+
+/* Área donde se muestra el texto generado */
+#output{
+    margin-top: 0;  /* Sin margen porque está pegado al header */
+    padding: 2rem;
+    background-color: var(--output-bg);
+    border: 1px solid var(--border-focus);
+    border-radius: 0 0 5px 5px;  /* Solo esquinas inferiores redondeadas */
+    border-top: none;  /* Sin borde superior para unirse con el header */
+    font-size: 1.6rem;
+    color: var(--text-color);
+    white-space: pre-wrap; /* Preserva saltos de línea y espacios del texto generado */
+    min-height: 120px; /* Altura mínima para evitar layout shifts */
+    line-height: 1.6;  /* Mejora la legibilidad del texto */
+}
+
+/* ===================================================================
+   BOTÓN DE COPIAR
+   =================================================================== */
+
+/* Botón de copiar en el header del output */
+#copy-btn {
+    width: auto;  /* Ancho automático, no hereda el 100% */
+    background-color: transparent;
+    color: var(--text-color);
+    border: none;
+    margin: 0;  /* Sin margen para posicionamiento preciso */
+    padding: 0.5rem 0.8rem;
+    font-size: 1.4rem;  /* Ligeramente más pequeño que otros botones */
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 200ms ease-in-out;  /* Transición más rápida para feedback inmediato */
+}
+
+/* Estado hover del botón copiar */
+#copy-btn:hover {
+    background-color: var(--primary);
+    color: white;
+}
+
+/* ===================================================================
+   MODAL DE ADVERTENCIA
+   =================================================================== */
+
+/* Overlay del modal que cubre toda la pantalla */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--modal-overlay);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background-color: var(--bg-container);
+    padding: 3rem;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px var(--modal-shadow);
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-content h2 {
+    font-size: 2.4rem;
+    color: var(--error-color);
+    margin-bottom: 2rem;
+}
+
+.modal-content p {
+    font-size: 1.6rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    margin-top: 2.5rem;
+}
+
+.shortcuts-info {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.shortcuts-info p {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.shortcuts-info .shortcuts {
+    background: var(--output-bg);
+    padding: 1.5rem;
+    border-radius: 8px;
+    font-size: 1.4rem;
+    line-height: 1.8;
+}
+
+.shortcuts-info .shortcuts strong {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.modal-btn {
+    padding: 1.2rem 2.4rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.4rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 300ms ease-in-out;
+    margin: 0;
+    width: auto;
+}
+
+.modal-btn.secondary {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.modal-btn.secondary:hover {
+    background-color: var(--secondary-hover);
+}
+
+/* ===================================================================
+   RESPONSIVE DESIGN - MODAL
+   =================================================================== */
+@media (max-width: 768px) {
+    .modal-content {
+        padding: 2rem;
+    }
+    
+    .modal-buttons {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .modal-btn {
+        width: 100%;
+    }
+}
