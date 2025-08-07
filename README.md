@@ -6,6 +6,10 @@
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
+[![Live Demo](https://img.shields.io/badge/Demo-Live-brightgreen?style=flat-square)](https://isa-bos-dev.github.io/Pluma-Digital/)
+
+
+> ### [**Ver Demo en Vivo 🚀**](https://isa-bos-dev.github.io/Pluma-Digital/)
 
 ## 📋 Tabla de Contenidos
 
@@ -104,11 +108,12 @@ Para habilitar la Writer API, debes activar los siguientes flags experimentales:
    ```
 
 2. **Buscar y Habilitar los siguientes flags** (el nombre puede variar ligeramente entre versiones):
+
    **🔹 Enables optimization guide on device**
-   ```
-   chrome://flags/#optimization-guide-on-device-model
-   ```
-   ➡️ Cambiar de `Default` a `Enabled`
+      ```
+      chrome://flags/#optimization-guide-on-device-model
+      ```
+      ➡️ Cambiar de `Default` a `Enabled`
 
    **🔹 Prompt API for Gemini Nano**
    ```
