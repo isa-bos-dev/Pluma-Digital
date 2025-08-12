@@ -71,7 +71,9 @@
 - **Clipboard API**: Copia moderna al portapapeles
 - **Navigator API**: Detección de navegador y capacidades
 
-> 📚 **Documentación oficial**: [Chrome Writer API](https://developer.chrome.com/docs/ai/writer-api?hl=es-419)
+> 📚 **Documentación oficial**:
+-  [Chrome Writer API](https://developer.chrome.com/docs/ai/writer-api?hl=es-419)
+-  [Chrome Rewriter API](https://developer.chrome.com/docs/ai/rewriter-api?hl=es-419)
 
 ### 🎨 **Diseño**
 - **Responsive Design**: Mobile-first approach
@@ -126,6 +128,13 @@ Para habilitar la Writer API, debes activar los siguientes flags experimentales:
    chrome://flags/#writer-api
    ```
    ➡️ Cambiar de `Default` a `Enabled`
+   
+     **🔹 Rewriter API**
+   ```
+   chrome://flags/#rewriter-api
+   ```
+   ➡️ Cambiar de `Default` a `Enabled`
+   
 
    **🔹 Summarization API (Opcional pero recomendado)**
    ```
@@ -210,6 +219,27 @@ npx serve .
 4. **¡Listo para usar!**: Una vez descargado, la aplicación funcionará offline
 
 ## 📱 Funcionalidades
+
+### 🔘 **Selector de Modo**
+La interfaz cuenta con un selector en la parte superior que te permite cambiar instantáneamente entre los modos **"Escribir"** y **"Reescribir"**. La aplicación adaptará dinámicamente las etiquetas, opciones y el comportamiento del botón principal.
+
+### ✍️ **Cómo Usar el Modo "Escribir"**
+1.  **Selecciona el modo "Escribir"**.
+2.  **Escribe tu idea**: En el área de texto principal (ej: "Un poema sobre la programación").
+3.  **Configura el Tono y la Longitud** deseados (Neutral/Formal/Casual, Corto/Medio/Largo).
+4.  Haz clic en **"Generar texto"**.
+
+### 🔄 **Cómo Usar el Modo "Reescribir"**
+1.  **Selecciona el modo "Reescribir"**.
+2.  **Pega tu texto**: En el área de texto principal.
+3.  **Elige una acción de Tono y Longitud**:
+    - **Tono**: "Como está", "Más Formal", "Más Casual".
+    - **Longitud**: "Como está", "Más Corto", "Más Largo".
+4.  Haz clic en **"Reescribir texto"**.
+
+### 📋 **Copiado de Resultados**
+En ambos modos, una vez generado el texto, puedes copiarlo al portapapeles con un solo clic en el icono 📋 en la esquina del área de resultados.
+
 
 ### ✍️ **Generación de Texto**
 
@@ -379,18 +409,17 @@ Si los problemas persisten:
 
 ### 🏗️ **Arquitectura de la Aplicación**
 
-```mermaid
 graph TD
     A[Usuario] --> B[Interface HTML]
-    B --> C[Event Handlers JS]
-    C --> D{Navegador Compatible?}
-    D -->|No| E[Modal de Advertencia]
-    D -->|Sí| F[Writer API]
-    F --> G[Modelo IA Local]
-    G --> H[Texto Generado]
+    B --> C{Selecciona Modo}
+    C -->|Escribir| D[Writer API]
+    C -->|Reescribir| E[Rewriter API]
+    D --> F[Modelo IA Local]
+    E --> F
+    F --> G[Texto Generado]
+    G --> H[Mostrar en Output]
     H --> I[Clipboard API]
     I --> J[Portapapeles]
-```
 
 ### 📁 **Estructura del Código**
 
@@ -416,18 +445,25 @@ graph TD
 
 #### **Chrome Writer API**:
 ```javascript
-// Verificar disponibilidad
-const availability = await ai.writer.availability();
-
-// Crear instancia
+// Crear instancia del modo Escritor
 const writer = await ai.writer.create({
   tone: 'formal',
-  length: 'medium',
-  format: 'plain-text'
+  length: 'medium'
 });
-
 // Generar texto
 const result = await writer.write(prompt, { context });
+
+```
+
+#### **Chrome Rewriter API**:
+```javascript
+// Crear instancia del modo Reescribir
+const rewriter = await ai.rewriter.create({
+  tone: 'more-formal',
+  length: 'shorter'
+});
+// Reescribir texto
+const result = await rewriter.rewrite(previousText, { context });
 ```
 
 #### **Clipboard API**:

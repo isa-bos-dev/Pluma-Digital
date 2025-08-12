@@ -85,6 +85,47 @@ h3 {
 }
 
 /* ===================================================================
+   SELECTOR DE MODO (ESCRIBIR / REESCRIBIR)
+   =================================================================== */
+.mode-selector {
+    display: flex;
+    justify-content: center;
+    background-color: var(--output-header-bg);
+    border-radius: 8px;
+    padding: 0.5rem;
+    margin-bottom: 2rem;
+    border: 1px solid var(--border-color);
+}
+
+.mode-option {
+    flex: 1;
+}
+
+/* Ocultamos el radio button real */
+.mode-option input[type="radio"] {
+    display: none;
+}
+
+/* Estilizamos el label para que parezca un botón */
+.mode-option label {
+    display: block;
+    text-align: center;
+    padding: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: 600;
+    transition: all 0.2s ease-in-out;
+    margin: 0;
+}
+
+/* Estilo del label cuando su radio button está seleccionado (checked) */
+.mode-option input[type="radio"]:checked + label {
+    background-color: var(--primary);
+    color: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* ===================================================================
    FORMULARIOS Y CONTROLES
    =================================================================== */
 

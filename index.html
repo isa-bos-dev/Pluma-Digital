@@ -37,8 +37,20 @@
         <h1>✒️ Pluma Digital</h1>
         <h3>Tu asistente inteligente de escritura potenciado por IA</h3>
 
-        <label for="idea">💡 ¿Qué quieres que la IA te escriba?</label>
-        <textarea id="idea" placeholder="Ejemplo: Redactar un email para aplicar a una oferta de trabajo como desarrollador frontend con html, css y javascript"></textarea>
+        <!-- ================SELECTOR DE MODO ================ -->
+        <div class="mode-selector">
+            <div class="mode-option">
+                <input type="radio" id="mode-writer" name="mode" value="writer" checked>
+                <label for="mode-writer">✍️ Escribir</label>
+            </div>
+            <div class="mode-option">
+                <input type="radio" id="mode-rewriter" name="mode" value="rewriter">
+                <label for="mode-rewriter">📝 Reescribir</label>
+            </div>
+        </div>
+
+        <label for="text-input">💡 ¿Qué quieres que la IA te escriba?</label>
+        <textarea id="text-input" placeholder="Ejemplo: Redactar un email para aplicar a una oferta de trabajo como desarrollador frontend con html, css y javascript"></textarea>
 
         <!-- Fila con dos columnas para configuración del texto -->
         <div class="form-row">
@@ -61,7 +73,7 @@
             </div>
         </div>
 
-        <button id="generate-btn">✏️ Generar texto</button>
+        <button id="action-btn">✏️ Generar texto</button>
         
         <!-- Área de salida del texto generado -->
         <div class="output-section">
