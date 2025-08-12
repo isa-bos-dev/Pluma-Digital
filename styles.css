@@ -37,6 +37,15 @@ html{
 }
 
 /* ===================================================================
+   CLASES DE UTILIDAD
+   =================================================================== */
+
+/* Clase para ocultar elementos de forma controlada por JS */
+.hidden {
+    display: none !important; /* !important para asegurar que sobreescribe otras reglas de display */
+}
+
+/* ===================================================================
    LAYOUT PRINCIPAL
    =================================================================== */
 

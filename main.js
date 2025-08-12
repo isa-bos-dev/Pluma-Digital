@@ -1,13 +1,20 @@
 /* ===================================================================
-   PLUMA DIGITAL - APLICACIÓN DE ESCRITURA CON IA
+   PLUMA DIGITAL - APLICACIÓN DE ESCRITURA CON IA (v3.0)
+   ===================================================================
+   
+   Suite de herramientas con tres modos:
+   1. Writer: Genera texto desde una idea.
+   2. Rewriter: Reformula un texto existente.
+   3. Summarizer: Condensa textos largos.
+   
    =================================================================== */
 
 // ===================================================================
 // ESTADO GLOBAL Y SELECTORES DEL DOM
 // ===================================================================
 
-let currentMode = 'writer'; // Modo inicial: 'writer' o 'rewriter'
-let apiInstance; // Almacenará la instancia de la API (Writer o Rewriter)
+let currentMode = 'writer'; // Modo inicial: 'writer', 'rewriter', o 'summarizer'
+let apiInstance; // Almacenará la instancia de la API (Writer , Rewriter , Summarizer)
 
 const actionBtn = document.querySelector("#action-btn");
 const copyBtn = document.querySelector("#copy-btn");
@@ -24,6 +31,7 @@ const modeOptions = {
         buttonText: "✏️ Generar texto",
         api: self.Writer,
         apiName: "Writer",
+        showSelectors: true, // Mostrar selectores de tono y longitud
         context: "Eres un asistente de escritura. Responde siempre en el mismo idioma en el que el usuario te escribe, basándote en la idea que te proporciona.",
         toneOptions: [
             { value: 'neutral', text: 'Neutral' },
@@ -42,7 +50,8 @@ const modeOptions = {
         buttonText: "📝 Reescribir texto",
         api: self.Rewriter,
         apiName: "Rewriter",
-        context: "Mejora el texto del usuario evitando lenguaje tóxico o maleducado, mejorando la comprensión y corrigiendo faltas de ortografía. Responde siempre en el mismo idioma esta el texto introducido.",
+        showSelectors: true, // Mostrar selectores
+        context: "Mejora el texto del usuario evitando lenguaje tóxico o maleducado, mejorando la comprensión y corrigiendo faltas de ortografía. Responde siempre en el mismo idioma del texto introducido.",
         toneOptions: [
             { value: 'as-is', text: 'Como está' },
             { value: 'more-formal', text: 'Más Formal' },
@@ -53,6 +62,15 @@ const modeOptions = {
             { value: 'shorter', text: 'Más Corto' },
             { value: 'longer', text: 'Más Largo' }
         ]
+    },
+    summarizer: {
+        label: "📄 ¿Qué texto quieres resumir?",
+        placeholder: "Pega aquí el artículo, ensayo o texto largo que quieras condensar...",
+        buttonText: "📄 Resumir texto",
+        api: self.Summarizer,
+        apiName: "Summarizer",
+        showSelectors: false, // ¡No mostrar selectores para el resumidor!
+        context: "Crea un resumen conciso y claro del texto proporcionado. Mantén el mismo idioma del texto original.",
     }
 };
 
@@ -62,28 +80,34 @@ const modeOptions = {
 
 /**
  * Actualiza la UI (labels, placeholders, opciones de select) según el modo seleccionado.
- * @param {string} mode - El modo actual ('writer' o 'rewriter').
+ * @param {string} mode - El modo actual ('writer', 'rewriter', 'summarizer').
  */
 function updateUIForMode(mode) {
     const options = modeOptions[mode];
+    const formRow = document.querySelector(".form-row");
 
     document.querySelector('label[for="text-input"]').textContent = options.label;
     document.querySelector("#text-input").placeholder = options.placeholder;
     actionBtn.innerHTML = options.buttonText;
 
-    const populateSelect = (selectId, optionList) => {
-        const selectElement = document.querySelector(selectId);
-        selectElement.innerHTML = '';
-        optionList.forEach(opt => {
-            const optionElement = document.createElement('option');
-            optionElement.value = opt.value;
-            optionElement.textContent = opt.text;
-            selectElement.appendChild(optionElement);
-        });
-    };
-
-    populateSelect("#tone", options.toneOptions);
-    populateSelect("#length", options.lengthOptions);
+    // Mostrar u ocultar los selectores de tono y longitud
+    if (options.showSelectors) {
+        formRow.classList.remove('hidden');
+        const populateSelect = (selectId, optionList) => {
+            const selectElement = document.querySelector(selectId);
+            selectElement.innerHTML = '';
+            optionList.forEach(opt => {
+                const optionElement = document.createElement('option');
+                optionElement.value = opt.value;
+                optionElement.textContent = opt.text;
+                selectElement.appendChild(optionElement);
+            });
+        };
+        populateSelect("#tone", options.toneOptions);
+        populateSelect("#length", options.lengthOptions);
+    } else {
+        formRow.classList.add('hidden');
+    }
 }
 
 // ===================================================================
@@ -95,14 +119,11 @@ function updateUIForMode(mode) {
  */
 actionBtn.addEventListener("click", async () => {
     const textInput = document.querySelector("#text-input").value.trim();
-    const tone = document.querySelector("#tone").value;
-    const length = document.querySelector("#length").value;
     const output = document.querySelector("#output");
-
     const currentOptions = modeOptions[currentMode];
 
     if (!textInput) {
-        output.textContent = `⚠️ Por favor, introduce el texto que quieres ${currentMode === 'writer' ? 'generar' : 'reescribir'}.`;
+        output.textContent = `⚠️ Por favor, introduce el texto que quieres ${currentMode === 'writer' ? 'generar' : (currentMode === 'rewriter' ? 'reescribir' : 'resumir')}.`;
         return;
     }
 
@@ -122,7 +143,15 @@ actionBtn.addEventListener("click", async () => {
         return;
     }
     
-    const apiConfig = { tone, length };
+    let apiConfig = {};
+    if (currentMode === 'summarizer') {
+        apiConfig = { type: 'tldr', length: 'medium' }; 
+    } else {
+        apiConfig = { 
+            tone: document.querySelector("#tone").value, 
+            length: document.querySelector("#length").value 
+        };
+    }
 
     if (availability === "available") {
         apiInstance = await Api.create(apiConfig);
@@ -137,16 +166,41 @@ actionBtn.addEventListener("click", async () => {
         });
     }
 
-    output.textContent = `✍️ ${currentMode === 'writer' ? 'Generando' : 'Reescribiendo'} texto...`;
+    output.textContent = `✍️ ${currentMode === 'writer' ? 'Generando' : (currentMode === 'rewriter' ? 'Reescribiendo' : 'Resumiendo')} texto...`;
     
     let result;
-    if (currentMode === 'writer') {
-        result = await apiInstance.write(textInput, { context: currentOptions.context });
-    } else {
-        result = await apiInstance.rewrite(textInput, { context: currentOptions.context });
-    }
+    try {
+        switch (currentMode) {
+            case 'writer':
+                result = await apiInstance.write(textInput, { context: currentOptions.context });
+                output.textContent = result;
+                break;
+            case 'rewriter':
+                result = await apiInstance.rewrite(textInput, { context: currentOptions.context });
+                output.textContent = result;
+                break;
+            case 'summarizer':
+                // Normalmente Summarizer nos devuelve el texto en ingles, poir lo que usaremos la API writer para traducirlo
+                // Obtener el resumen (probablemente en inglés)
+                output.textContent = "✍️ Creando resumen...";
+                const englishSummary = await apiInstance.summarize(textInput);
 
-    output.textContent = result;
+                // Usar la API Writer para traducir el resumen
+                output.textContent = "🌍 Traduciendo resumen al español...";
+                
+                // Creamos una instancia temporal de Writer específicamente para traducir
+                const translator = await self.Writer.create(); 
+                const spanishSummary = await translator.write(
+                    `Traduce el siguiente texto al español: "${englishSummary}"`
+                );
+
+                output.textContent = spanishSummary;
+                break;
+        }
+    } catch (error) {
+        console.error("Error durante la operación de IA:", error);
+        output.textContent = `❌ Ocurrió un error: ${error.message}`;
+    }
 });
 
 // ===================================================================

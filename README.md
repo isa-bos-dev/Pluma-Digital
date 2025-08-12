@@ -29,35 +29,41 @@
 
 ## 🎯 Descripción
 
-**Pluma Digital** es una aplicación web innovadora que aprovecha las capacidades de inteligencia artificial integradas en Google Chrome para ofrecer asistencia de escritura avanzada. Utilizando la **Chrome Writer API**, la aplicación procesa el texto localmente en tu dispositivo, garantizando privacidad total y rendimiento óptimo.
+**Pluma Digital** es una innovadora suite de escritura que integra la inteligencia artificial de Google Chrome directamente en tu navegador. Utilizando las **APIs de IA de Chrome (Writer, Rewriter y Summarizer)**, la aplicación te permite generar contenido nuevo, reformular textos existentes y condensar artículos largos, garantizando siempre una privacidad total y un rendimiento óptimo al procesar todo localmente.
 
 ### 🔥 ¿Por qué Pluma Digital?
 
-- **🛡️ Privacidad Total**: Todo el procesamiento ocurre localmente, sin envío de datos a servidores externos
-- **⚡ Rendimiento Superior**: Respuestas instantáneas sin latencia de red
-- **🎯 Personalización Avanzada**: Control granular sobre tono y longitud del contenido
-- **🌐 Sin Conexión**: Funciona completamente offline una vez descargado el modelo
-- **💰 Completamente Gratuito**: Sin suscripciones ni límites de uso
+- **Multifuncional**: Alterna fácilmente entre un potente **escritor**, un preciso **reescritor** y un eficiente **resumidor**.
+- **🛡️ Privacidad Total**: Todo el procesamiento ocurre en tu dispositivo, sin enviar datos a servidores externos.
+- **⚡ Rendimiento Superior**: Respuestas instantáneas sin latencia de red.
+- **🎯 Personalización Avanzada**: Control granular sobre el tono y la longitud del contenido.
+- **🌐 Sin Conexión**: Funciona completamente offline una vez que los modelos de IA se han descargado.
+- **💰 Completamente Gratuito**: Sin suscripciones ni límites de uso.
 
 ## ✨ Características
 
-### 🎨 **Generación de Texto Inteligente**
-- **Tono Configurable**: Neutral, Formal, Casual
-- **Longitud Personalizable**: Corto, Medio, Largo
-- **Contexto Inteligente**: Mantiene coherencia temática
-- **Multiidioma**: Responde en el mismo idioma que el input
+Pluma Digital ofrece tres modos de operación principales, cada uno diseñado para una tarea de escritura específica.
 
-### 📋 **Funcionalidades de Productividad**
-- **Copia Instantánea**: Un clic para copiar al portapapeles
-- **Interfaz Responsive**: Optimizada para desktop y móvil
-- **Feedback Visual**: Indicadores de estado en tiempo real
-- **Compatibilidad de Navegadores**: Detección automática y alertas
+### ✍️ **Modo Escribir: Generador de Contenido**
+- **Generación desde Cero**: Transforma una simple idea en texto bien estructurado.
+- **Tono Configurable**: Neutral, Formal, Casual.
+- **Longitud Personalizable**: Corto, Medio, Largo.
 
-### 🔧 **Características Técnicas**
-- **API Moderna**: Utiliza Chrome Writer API nativa
-- **Fallbacks Robustos**: Compatibilidad con métodos de copia legacy
-- **Progressive Enhancement**: Funciona incluso con JavaScript limitado
-- **Arquitectura Modular**: Código limpio y mantenible
+### 📝 **Modo Reescribir: Reformulador de Texto**
+- **Mejora de Texto**: Pega un texto existente para mejorarlo, corregirlo o cambiar su estilo.
+- **Ajuste de Tono**: Reescribe el texto para que sea "Más Formal" o "Más Casual".
+- **Modificación de Longitud**: Expande el texto ("Más Largo") o condénsalo ("Más Corto").
+
+### 📄 **Modo Resumir: Condensador de Información**
+- **Resúmenes Precisos**: Pega artículos, informes o textos largos para obtener un resumen conciso.
+- **Extracción de Puntos Clave**: Genera un resumen directo y al grano (formato TL;DR).
+- **Procesamiento Eficiente**: Ideal para entender rápidamente la esencia de documentos extensos.
+
+### 📋 **Funcionalidades de Productividad (Comunes a todos los modos)**
+- **Copia Instantánea**: Un clic para copiar el resultado al portapapeles.
+- **Interfaz Adaptativa**: La UI se ajusta dinámicamente al modo seleccionado, mostrando solo los controles relevantes.
+- **Feedback Visual**: Indicadores de estado en tiempo real (cargando, descargando, generando).
+- **Detección de Navegador**: Alerta a los usuarios si no están utilizando Google Chrome.
 
 ## 🔧 Tecnologías Utilizadas
 
@@ -66,14 +72,18 @@
 - **CSS3**: Variables CSS, Flexbox, Grid, Animaciones
 - **JavaScript ES6+**: Async/await, Módulos, APIs modernas
 
-### 🤖 **APIs de IA**
-- **Chrome Writer API**: Generación de texto con IA local
-- **Clipboard API**: Copia moderna al portapapeles
-- **Navigator API**: Detección de navegador y capacidades
+### 🤖 **APIs de IA (On-Device)**
+- **Chrome On-Device AI APIs**:
+  - **Writer API**: Generación de texto desde cero.
+  - **Rewriter API**: Reformulación y mejora de texto.
+  - **Summarizer API**: Creación de resúmenes.
+- **Clipboard API**: Copia moderna y segura al portapapeles.
+- **Navigator API**: Detección avanzada de navegador.
 
 > 📚 **Documentación oficial**:
 -  [Chrome Writer API](https://developer.chrome.com/docs/ai/writer-api?hl=es-419)
 -  [Chrome Rewriter API](https://developer.chrome.com/docs/ai/rewriter-api?hl=es-419)
+-  [Chrome Summarizer API](https://developer.chrome.com/docs/ai/summarizer-api?hl=es-419)
 
 ### 🎨 **Diseño**
 - **Responsive Design**: Mobile-first approach
@@ -136,7 +146,7 @@ Para habilitar la Writer API, debes activar los siguientes flags experimentales:
    ➡️ Cambiar de `Default` a `Enabled`
    
 
-   **🔹 Summarization API (Opcional pero recomendado)**
+   **🔹 Summarization API**
    ```
    chrome://flags/#summarization-api-for-gemini-nano
    ```
@@ -147,31 +157,15 @@ Para habilitar la Writer API, debes activar los siguientes flags experimentales:
    - O cerrar completamente Chrome y volver a abrirlo
 
 ### 🔍 **Verificar Configuración**
-
 Para confirmar que todo está configurado correctamente:
 
-1. Abrir **DevTools** (F12)
-2. Ir a la pestaña **Console**
-3. Ejecutar:
-   ```javascript
-   console.log('Writer API disponible:', 'ai' in window && 'writer' in window.ai);
-   ```
-4. Debería mostrar: `Writer API disponible: true`
+1. Abrir **DevTools** (F12) e ir a la pestaña **Console**.
+2. Ejecutar el siguiente código:
+```javascript
+console.log('Writer API disponible:', 'ai' in window && 'writer' in window.ai);
+console.log('Rewriter API disponible:', 'ai' in window && 'rewriter' in window.ai);
+console.log('Summarizer API disponible:', 'ai' in window && 'summarizer' in window.ai);
 
-> ℹ️ Alternativa más robusta y a prueba de futuro
-    >    ```javascript
-    >    console.log('Writer API disponible:', 'ai' in window && typeof 
-    >    window.ai.canCreateTextSession === 'function');
-    >   ```
-
-### 📱 **Configuración Alternativa (Chrome Canary)**
-
-Si usas Chrome Canary, algunos flags pueden tener nombres ligeramente diferentes:
-
-```
-chrome://flags/#optimization-guide-on-device-model
-chrome://flags/#gemini-nano-api
-```
 
 ## 🚀 Instalación y Uso
 
@@ -236,6 +230,11 @@ La interfaz cuenta con un selector en la parte superior que te permite cambiar i
     - **Tono**: "Como está", "Más Formal", "Más Casual".
     - **Longitud**: "Como está", "Más Corto", "Más Largo".
 4.  Haz clic en **"Reescribir texto"**.
+
+### 📄 **Cómo Usar el Modo "Resumir"**
+1.  **Selecciona el modo "Resumir".**.
+2.  **Pega tu texto a resumir**: En el área de texto principal.
+3.  Haz clic en **"Resumir texto"**.
 
 ### 📋 **Copiado de Resultados**
 En ambos modos, una vez generado el texto, puedes copiarlo al portapapeles con un solo clic en el icono 📋 en la esquina del área de resultados.
@@ -409,17 +408,21 @@ Si los problemas persisten:
 
 ### 🏗️ **Arquitectura de la Aplicación**
 
+```mermaid
 graph TD
     A[Usuario] --> B[Interface HTML]
     B --> C{Selecciona Modo}
     C -->|Escribir| D[Writer API]
     C -->|Reescribir| E[Rewriter API]
-    D --> F[Modelo IA Local]
-    E --> F
-    F --> G[Texto Generado]
-    G --> H[Mostrar en Output]
-    H --> I[Clipboard API]
-    I --> J[Portapapeles]
+    C -->|Resumir| F[Summarizer API]
+    D --> G[Modelo IA Local]
+    E --> G
+    F --> G
+    G --> H[Texto Generado]
+    H --> I[Mostrar en Output]
+    I --> J[Clipboard API]
+    J --> K[Portapapeles]
+```
 
 ### 📁 **Estructura del Código**
 
@@ -464,6 +467,14 @@ const rewriter = await ai.rewriter.create({
 });
 // Reescribir texto
 const result = await rewriter.rewrite(previousText, { context });
+```
+
+#### **Chrome Summarizer API:**:
+```javascript
+// Crear instancia del modo Resumidor
+const summarizer = await ai.summarizer.create({ type: 'tldr' });
+// Resumir texto
+const result = await summarizer.summarize({ text: textToSummarize }, { context });
 ```
 
 #### **Clipboard API**:
